@@ -1,0 +1,74 @@
+---------------------------------------------
+PIC ASSEMBLER LISTING
+Line    Address Opcode  Instruction
+---------------------------------------------
+0001    0000            	counter equ 21h
+0002    0000            
+0003    0000            	org	0x00
+0004    0000    2805    	goto	init
+0005    0001            
+0006    0001            	org	0x04
+0007    0004    0009    	retfie
+0008    0005            
+0009    0005            init:
+0010    0005    3007    	movlw	07h
+0011    0006    009F    	movwf	cmcon
+0012    0007    1683    	bsf	status,05h
+0013    0008    30FF    	movlw	b'11111111'
+0014    0009    0085    	movwf	trisa
+0015    000A    0100    	clrw
+0016    000B    0086    	movwf	trisb
+0017    000C    1283    	bcf	status,05h
+0018    000D    2822    	goto main
+0019    000E            
+0020    000E            lookup:
+0021    000E    0821    	movf	counter,0
+0022    000F    0782    	addwf	pcl,1
+0023    0010            
+0024    0010    34C0    	retlw	b'11000000';0
+0025    0011    34F9    	retlw	b'11111001';1
+0026    0012    34A4    	retlw	b'10100100';2
+0027    0013    34B0    	retlw	b'10110000';3
+0028    0014    3499    	retlw	b'10011001';4
+0029    0015    3492    	retlw	b'10010010';5
+0030    0016    3483    	retlw	b'10000011';6
+0031    0017    34F8    	retlw	b'11111000';7
+0032    0018    3480    	retlw	b'10000000';8
+0033    0019    3498    	retlw	b'10011000';9
+0034    001A    3488    	retlw	b'10001000';a
+0035    001B    3482    	retlw	b'10000010';b
+0036    001C    34C6    	retlw	b'11000110';c
+0037    001D    34A1    	retlw	b'10100001';d
+0038    001E    3486    	retlw	b'10000110';e
+0039    001F    348E    	retlw	b'10001110';f
+0040    0020            
+0041    0020            adding:
+0042    0020    07A1    	addwf	counter,1
+0043    0021            
+0044    0021    0008    	return
+0045    0022            
+0046    0022            main:
+0047    0022    01A1    	clrf	counter
+0048    0023    1A05    	btfsc	porta,4h
+0049    0024    3001    	movlw	b'00000001'
+0050    0025    2020    	call	adding
+0051    0026    0100    	clrw
+0052    0027    1A85    	btfsc	porta,5h
+0053    0028    3002    	movlw	b'00000010'
+0054    0029    2020    	call	adding
+0055    002A    0100    	clrw
+0056    002B    1B05    	btfsc	porta,6h
+0057    002C    3004    	movlw	b'00000100'
+0058    002D    2020    	call	adding
+0059    002E    0100    	clrw
+0060    002F    1B85    	btfsc	porta,7h
+0061    0030    3008    	movlw	b'00001000'
+0062    0031    2020    	call	adding
+0063    0032    0100    	clrw
+0064    0033    200E    	call	lookup
+0065    0034    0086    	movwf	portb
+0066    0035    0100    	clrw
+0067    0036    2822    	goto	main
+0068    0037            	end
+---------------------------------------------
+Number of errors = 0
